@@ -1,6 +1,8 @@
 package main;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Damenproblem {
@@ -18,7 +20,12 @@ public class Damenproblem {
     }
 
     public List<Dame> solve() {
-        return solver.solve(300, null);
+        List<Dame> damen = new LinkedList<>();
+        int boardSize = 8;
+        for (int i = 0; i < boardSize; i++) {
+            damen.add(new Dame(boardSize));
+        }
+        return solver.solve(30000, damen);
     }
 
     public void printBoard(List<Dame> damen, int boardSize) {
@@ -28,11 +35,11 @@ public class Damenproblem {
         }
         String board = stringBuilder.toString();
         char[] boardChars = board.toCharArray();
-        damen.forEach(dame -> boardChars[dame.getPosX() + dame.getPosY() * boardSize] = 'X');
+        damen.forEach((Dame dame) -> boardChars[dame.getPosX() + dame.getPosY() * boardSize] = 'X');
         board = new String(boardChars);
         for (int i = 0; i < boardSize; i++) {
             System.out.println(board.substring(i*boardSize, i*boardSize+boardSize));
         }
-
+        damen.forEach(dame -> System.out.println(dame.getFitness(damen)));
     }
 }

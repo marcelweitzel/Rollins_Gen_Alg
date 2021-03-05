@@ -22,7 +22,7 @@ public class GeneticAlgorithm implements ProblemSolver {
     private List<Dame> naturalSelection(List<Dame> damen) {
         Collections.shuffle(damen);
         List<Dame> successors = new LinkedList<>();
-        for (int i = 0; i < damen.size(); i++) {
+        for (int i = 0; i < damen.size(); i+=2) {
             Dame challenger = damen.get(i);
             Dame defender = damen.get(i + 1);
             successors.add(challenger.getFitness(damen) > defender.getFitness(damen) ? challenger : defender);

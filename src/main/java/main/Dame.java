@@ -17,11 +17,11 @@ public class Dame {
     }
 
     public void setPosX(int posX) {
-        this.posX = posX;
+        this.posX = (posX+8)%8;
     }
 
     public void setPosY(int posY) {
-        this.posY = posY;
+        this.posY = (posY+8)%8;
     }
 
     public int getPosX() {
@@ -33,8 +33,14 @@ public class Dame {
     }
 
     public double getFitness(List<Dame> damen) {
-        List<Dame> collided = damen.stream().filter(dame -> this.collidesWith(dame)).collect(Collectors.toList());
-        return boardSize / collided.size();
+        double value = 1000;
+        value *= Math.pow(0.5, damen.stream().filter(dame -> samePosition(dame)).count());
+        value *= Math.pow(0.1, damen.stream().filter(dame -> this.collidesWith(dame)).count());
+        return value;
+    }
+
+    private boolean samePosition(Dame dame) {
+        return this.posX == dame.getPosX() && this.posY == dame.getPosY();
     }
 
     private boolean collidesWith(Dame dame) {
