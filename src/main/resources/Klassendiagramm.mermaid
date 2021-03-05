@@ -1,0 +1,28 @@
+classDiagram
+    class Damenproblem {
+        -damen: Dame[]
+        -solver: ProblemSolver
+        +Damenproblem(solver: ProblemSolver)
+    }
+    class ProblemSolver {
+        +solve(requiredFitness: double, damen: Dame[]) Dame[]
+    }
+    class GeneticAlgorithm {
+        -tournament(damen: Dame[]) Dame[]
+        -generateNextGeneration(requiredFitness: double, damen: Dame[]) Dame[]
+        +solve(damen: Dame[]) Dame[]
+
+        
+    }
+    class Dame {
+        -boardSize: int
+        -posX: int
+        -posY: int
+        +Dame(boardSize: int)
+        +getFitness(damen: Dame[]) double
+        +mutate() Dame
+    }
+    <<interface>> ProblemSolver
+    ProblemSolver <|-- GeneticAlgorithm
+    ProblemSolver --o Damenproblem
+    Damenproblem o-- Dame
